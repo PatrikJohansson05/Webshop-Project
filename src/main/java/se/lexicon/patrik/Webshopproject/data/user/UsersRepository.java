@@ -1,6 +1,6 @@
 package se.lexicon.patrik.Webshopproject.data.user;
 import se.lexicon.patrik.Webshopproject.data.DataSource;
-import se.lexicon.patrik.Webshopproject.model.User;
+import se.lexicon.patrik.Webshopproject.model.WebUser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Optional;
 public class UsersRepository implements Users{
 
     @Override
-    public User create(User user){
+    public WebUser create(WebUser user){
         if (user.getUserId() !=0)
             throw new IllegalArgumentException("Invalid Entry");
 
@@ -19,13 +19,13 @@ public class UsersRepository implements Users{
         ResultSet keySet = null;
         try{
             connection = DataSource.getConnection();
-            statement = connection.prepareStatement("INSERT INTO user (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement("INSERT INTO webUser (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getname());
             statement.execute();
 
             keySet = statement.getGeneratedKeys();
             while(keySet.next()){
-                user = new User(
+                user = new WebUser(
                         keySet.getInt(1),
                         user.getname(),
                         user.getEmail(),
@@ -52,8 +52,8 @@ public class UsersRepository implements Users{
         return user;
     }
 
-    private User createUserFromResultSet(ResultSet resultSet) throws SQLException{
-        User user = new User(
+    private WebUser createUserFromResultSet(ResultSet resultSet) throws SQLException{
+        WebUser user = new WebUser(
                 resultSet.getInt("user_id"),
                 resultSet.getString("name"),
                 resultSet.getString("address"),
@@ -63,10 +63,10 @@ public class UsersRepository implements Users{
     }
 
     @Override
-    public Collection<User> findAll() {
-        Collection<User> result = new ArrayList<>();
+    public Collection<WebUser> findAll() {
+        Collection<WebUser> result = new ArrayList<>();
         try(Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM webUser");
             ResultSet resultSet = statement.executeQuery()){
             while(resultSet.next()){
                 result.add(createUserFromResultSet(resultSet));
@@ -78,14 +78,14 @@ public class UsersRepository implements Users{
     }
 
     @Override
-    public Optional<User> findById(int personId){
-        Optional<User> result = Optional.empty();
+    public Optional<WebUser> findById(int personId){
+        Optional<WebUser> result = Optional.empty();
 
         try(Connection connection = DataSource.getConnection();
-            PreparedStatement statement = createFindByIdStatement(connection, "SELECT * FROM user WHERE user_id = ?", personId);
+            PreparedStatement statement = createFindByIdStatement(connection, "SELECT * FROM webUser WHERE user_id = ?", personId);
             ResultSet resultSet = statement.executeQuery()){
             while(resultSet.next()){
-                User person = createUserFromResultSet(resultSet);
+                WebUser person = createUserFromResultSet(resultSet);
                 result = Optional.of(person);
             }
         }catch (Exception e){
@@ -107,13 +107,13 @@ public class UsersRepository implements Users{
     }
 
     @Override
-    public Collection<User> findByName(String name) {
-        Collection<User> result = new ArrayList<>();
+    public Collection<WebUser> findByName(String name) {
+        Collection<WebUser> result = new ArrayList<>();
         try (Connection connection = DataSource.getConnection();
-             PreparedStatement statement = createFindByNameStatement(connection, "SELECT * FROM user WHERE name LIKE ?", name);
+             PreparedStatement statement = createFindByNameStatement(connection, "SELECT * FROM webUser WHERE name LIKE ?", name);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                User user = createUserFromResultSet(resultSet);
+                WebUser user = createUserFromResultSet(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,11 +123,11 @@ public class UsersRepository implements Users{
 
     // Changes needed
     @Override
-    public User update(User user){
+    public WebUser update(WebUser user){
         if (user.getUserId() == 0)
             throw new IllegalArgumentException("Invalid Entry");
         try(Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE user SET name = ?,  WHERE user_id =?")){
+            PreparedStatement statement = connection.prepareStatement("UPDATE webUser SET name = ?,  WHERE user_id =?")){
             statement.setString(1, user.getname());
             statement.setInt(3, user.getUserId());
             statement.execute();
@@ -141,7 +141,7 @@ public class UsersRepository implements Users{
     public boolean deleteById(int userId){
         boolean delete = false;
         try(Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE user_id = ?")){
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM webUser WHERE user_id = ?")){
             statement.setInt(1, userId);
             statement.execute();
             delete = true;

@@ -2,13 +2,13 @@ package se.lexicon.patrik.Webshopproject.model;
 
 import java.util.Objects;
 
-public class User {
+public class WebUser {
     private Integer userId;
     private String name;
     private String email;
     private String address;
 
-    public User(Integer userId, String name, String email, String address){
+    public WebUser(Integer userId, String name, String email, String address){
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -48,7 +48,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        WebUser user = (WebUser) o;
         return Objects.equals(userId, user.userId) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(email, user.email) &&

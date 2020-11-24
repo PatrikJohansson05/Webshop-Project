@@ -20,7 +20,7 @@ public class ProductsRepository implements Products {
         ResultSet keySet = null;
         try{
             connection = DataSource.getConnection();
-            statement = connection.prepareStatement("INSERT INTO product (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement("INSERT INTO product (name, price) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, product.getProductName());
             statement.execute();
 
@@ -77,15 +77,14 @@ public class ProductsRepository implements Products {
     }
 
     @Override
-    public Optional<Product> findById(int productId){
-        Optional<Product> result = Optional.empty();
+    public Product findById(int productId){
+        Product result = null;
 
         try(Connection connection = DataSource.getConnection();
             PreparedStatement statement = createFindByIdStatement(connection, "SELECT * FROM product WHERE product_id = ?", productId);
             ResultSet resultSet = statement.executeQuery()){
             while(resultSet.next()){
-                Product person = createProductFromResultSet(resultSet);
-                result = Optional.of(person);
+                result = createProductFromResultSet(resultSet);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -125,7 +124,7 @@ public class ProductsRepository implements Products {
         if (product.getProductId() == 0)
             throw new IllegalArgumentException("Invalid Entry");
         try(Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE product SET name = ?,  WHERE product_id =?")){
+            PreparedStatement statement = connection.prepareStatement("UPDATE product SET name = ?, price = ?  WHERE product_id =?")){
             statement.setString(1, product.getProductName());
             statement.setInt(3, product.getProductId());
             statement.execute();

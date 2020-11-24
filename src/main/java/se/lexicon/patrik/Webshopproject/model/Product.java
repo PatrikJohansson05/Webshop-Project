@@ -13,6 +13,11 @@ public class Product {
         this.price = price;
     }
 
+    public Product(String productName, String price){
+        this.productName = productName;
+        this.price = price;
+    }
+
     public Integer getProductId() {
         return productId;
     }
