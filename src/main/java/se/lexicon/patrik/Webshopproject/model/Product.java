@@ -18,6 +18,12 @@ public class Product {
         this.price = price;
     }
 
+    public Product() {
+    }
+    public void setProductId(Integer productId){
+        this.productId = productId;
+    }
+
     public Integer getProductId() {
         return productId;
     }
