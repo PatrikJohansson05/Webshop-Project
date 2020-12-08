@@ -1,7 +1,6 @@
 package se.lexicon.patrik.Webshopproject.data;
 
 import se.lexicon.patrik.Webshopproject.data.product.Products;
-import se.lexicon.patrik.Webshopproject.data.product.ProductsRepository;
 import se.lexicon.patrik.Webshopproject.model.Product;
 
 import java.sql.SQLException;
@@ -9,7 +8,7 @@ import java.util.Scanner;
 
 public class Functions {
 
-    private static Products     runProduct = new ProductsRepository();
+/*
 
     public static void connection() throws SQLException{
         System.out.println("Database connection established");
@@ -59,5 +58,5 @@ public class Functions {
         }
     }
 
-
+*/
 }

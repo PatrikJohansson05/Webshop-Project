@@ -1,14 +1,17 @@
 package se.lexicon.patrik.Webshopproject.dto;
 
-public class ProductDto {
+public class ProductForm {
     private String productId;
     private String productName;
     private String price;
 
-    public ProductDto(String productId, String productName, String price) {
+    public ProductForm(String productId, String productName, String price){
         this.productId = productId;
         this.productName = productName;
         this.price = price;
+    }
+
+    public ProductForm(){
     }
 
     public String getProductId() {

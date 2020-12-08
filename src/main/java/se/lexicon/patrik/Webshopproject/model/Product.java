@@ -1,13 +1,24 @@
 package se.lexicon.patrik.Webshopproject.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Product {
-    private Integer productId;
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+
+    private String productId;
     private String productName;
     private String price;
 
-    public Product(Integer productId, String productName, String price){
+    public Product(String productId, String productName, String price){
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -20,11 +31,11 @@ public class Product {
 
     public Product() {
     }
-    public void setProductId(Integer productId){
+    public void setProductId(String productId){
         this.productId = productId;
     }
 
-    public Integer getProductId() {
+    public String getProductId() {
         return productId;
     }
 
