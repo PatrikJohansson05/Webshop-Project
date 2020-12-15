@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Collection<ProductDto> findByProductName(String productName){
-        return null;
+        return converter.productToDto(productRepository.findByProductName(productName));
     }
 
     @Override
