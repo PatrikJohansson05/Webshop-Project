@@ -1,6 +1,7 @@
 package se.lexicon.patrik.Webshopproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import se.lexicon.patrik.Webshopproject.data.repository.ProductRepository;
 import se.lexicon.patrik.Webshopproject.dto.ProductDto;
 import se.lexicon.patrik.Webshopproject.dto.ProductForm;
@@ -9,6 +10,7 @@ import se.lexicon.patrik.Webshopproject.model.Product;
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 
+@Service
 public class ProductServiceImpl implements ProductService{
     ProductRepository productRepository;
     DtoConversionService converter;
@@ -56,4 +58,6 @@ public class ProductServiceImpl implements ProductService{
 
         return converter.productToDto(productRepository.save(product));
     }
+
+
 }

@@ -13,10 +13,11 @@ import java.util.Locale;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping(path = "/api/product")
 public class ProductController {
 
     public static final String ALL = "ALL";
+    public static final String ID = "ID";
     private ProductService productService;
 
     @Autowired
@@ -35,6 +36,16 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> findById(@PathVariable String productId){
+        return ResponseEntity.ok(productService.findByProductId(productId));
+    }
+
+    @GetMapping("/{productName}")
+    public ResponseEntity<?> findByProductName(@PathVariable String productName){
+        return ResponseEntity.ok(productService.findByProductName(productName));
+    }
+
     @PostMapping
     public ResponseEntity<ProductDto> createByForm(@RequestBody ProductForm dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createByForm(dto));
@@ -47,4 +58,5 @@ public class ProductController {
         }
         return ResponseEntity.ok(productService.update(updated));
     }
+
 }
