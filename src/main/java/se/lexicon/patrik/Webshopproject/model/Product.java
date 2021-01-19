@@ -1,10 +1,12 @@
 package se.lexicon.patrik.Webshopproject.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import se.lexicon.patrik.Webshopproject.dto.ProductDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity

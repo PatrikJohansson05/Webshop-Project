@@ -3,17 +3,20 @@ package se.lexicon.patrik.Webshopproject.data.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.patrik.Webshopproject.dto.ProductDto;
 import se.lexicon.patrik.Webshopproject.dto.ProductForm;
+import se.lexicon.patrik.Webshopproject.model.Product;
 import se.lexicon.patrik.Webshopproject.service.ProductService;
 
 import java.util.Collection;
 import java.util.Locale;
 
 @CrossOrigin(origins = "*")
-@RestController
-@RequestMapping(path = "/api/product")
+@Controller
+@RequestMapping(path = "products")
 public class ProductController {
 
     public static final String ALL = "ALL";
@@ -34,6 +37,12 @@ public class ProductController {
 
             default: return ResponseEntity.badRequest().body("Not a valid type: " + type);
         }
+    }
+
+    @RequestMapping(value = "/products")
+    public String getAll(Model model){
+        model.addAttribute("products", productService.findAll());
+        return "products";
     }
 
     @GetMapping("/{productId}")
